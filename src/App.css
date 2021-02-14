@@ -17,14 +17,30 @@ body {
   width: 300px;
 }
 
+.itemContainer p {
+  margin: 0px;
+}
+
 .itemContainer {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   margin: 10px;
   height: 25px;
   border: 1px solid #646464;
 }
-
-.itemContainer p {
-  margin: 0;
+ul 
+{
+    list-style: none;
+}
+.checkandbutton
+{
+  float: right;
+}
+.checkandbutton li
+{
+  display: inline;
+  margin-left: 70px;
+  padding: 2px;
+  position: relative;
 }
