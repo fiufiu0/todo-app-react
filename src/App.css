@@ -13,10 +13,6 @@ body {
   font-weight: bold;
 }
 
-.App input {
-  width: 300px;
-}
-
 .itemContainer p {
   margin: 0px;
 }
@@ -28,19 +24,4 @@ body {
   margin: 10px;
   height: 25px;
   border: 1px solid #646464;
-}
-ul 
-{
-    list-style: none;
-}
-.checkandbutton
-{
-  float: right;
-}
-.checkandbutton li
-{
-  display: inline;
-  margin-left: 70px;
-  padding: 2px;
-  position: relative;
 }

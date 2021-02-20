@@ -3,19 +3,29 @@ import './App.css'
 
 function ListInside({ deleteItem, toggleCompleted, itemObject, index }) {
 
+  // return (
+  //   <React.Fragment>
+  //     <table>
+  //       <tbody>
+  //         <tr key={itemObject + index} className="itemContainer">
+  //           <td>{itemObject.item}</td>
+  //           <td>
+  //             <input type="checkbox" onChange={() => toggleCompleted(itemObject.index)} checked={itemObject.completed} />
+  //             <button onClick={() => deleteItem(itemObject)}>X</button>
+  //           </td>
+  //         </tr>
+  //       </tbody>
+  //     </table>
+  //   </React.Fragment >
+  // )
+
   return (
     <React.Fragment>
       <div key={itemObject + index} className="itemContainer">
         <p>{itemObject.item}</p>
-        <div className="checkandbutton">
-          <ul>
-            <li>
-              <input type="checkbox" onChange={() => toggleCompleted(itemObject.index)} checked={itemObject.completed} />
-            </li>
-            <li>
-              <button onClick={() => deleteItem(itemObject)}>X</button>
-            </li>
-          </ul>
+        <div className="insideItemContainer">
+          <input type="checkbox" onChange={() => toggleCompleted(itemObject.index)} checked={itemObject.completed} />
+          <button onClick={() => deleteItem(itemObject)}>X</button>
         </div>
       </div>
     </React.Fragment >
@@ -127,14 +137,16 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h4>TODO LIST</h4>
-      </header>
-      <Form addTodo={addItemToList} clearTodo={clearTodo} />
-      <Filter filter={filter} setFilter={setFilter} />
-      <List itemList={itemList} updateItemList={updateItemList} filter={filter} />
-    </div>
+    <React.Fragment>
+      <div className="App">
+        <header className="App-header">
+          <h4>TODO LIST</h4>
+        </header>
+        <Form addTodo={addItemToList} clearTodo={clearTodo} />
+        <Filter filter={filter} setFilter={setFilter} />
+        <List itemList={itemList} updateItemList={updateItemList} filter={filter} />
+      </div>
+    </React.Fragment>
   );
 }
 
