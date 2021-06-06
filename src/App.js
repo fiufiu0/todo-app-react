@@ -1,8 +1,9 @@
 import * as React from 'react';
 import './App.css'
-import ButtonX from './components/ButtonX';
-import Checkbox from './components/Checkbox';
 import Header from './components/Header';
+import TodoList from './containers/TodoList';
+import TodoAdd from './containers/TodoAdd';
+import TodoFilter from './containers/TodoFilter';
 
 function useLocalStorageState(key, defaultValue) {
   const [value, setValue] = React.useState(() => {
@@ -16,87 +17,6 @@ function useLocalStorageState(key, defaultValue) {
     window.localStorage.setItem(key, JSON.stringify(value));
   }, [value, key]);
   return [value, setValue];
-}
-
-function ListInside({ deleteItem, toggleCompleted, itemObject, index }) {
-
-  return (
-    <React.Fragment>
-      <div key={itemObject + index} className="itemContainer">
-        <p>{itemObject.item}</p>
-        <div>
-          <Checkbox onChange={() => toggleCompleted(itemObject.index)} checked={itemObject.completed} />
-          <ButtonX onClick={() => deleteItem(itemObject)} />
-        </div>
-      </div>
-    </React.Fragment>
-  )
-}
-
-function List({ itemList, updateItemList, filter }) {
-
-  const deleteItem = (index) => {
-    const newList = itemList.filter(itemObject => {
-      return itemObject !== index;
-    });
-    updateItemList(newList);
-  };
-
-  const toggleCompleted = (index) => {
-    const updatedTodos = [...itemList].map((todo) => {
-      if (todo.index === index) {
-        todo.completed = !todo.completed
-      }
-      return todo;
-    });
-    updateItemList(updatedTodos)
-  }
-
-  return (
-    <div>
-      {itemList.filter((itemObject) => {
-        return (filter === 'all' || (itemObject.completed && filter) === 'completed' || (!itemObject.completed && filter) === 'other');
-      }).map((itemObject) => {
-        return (
-          <ListInside itemObject={itemObject} key={itemObject.index} deleteItem={deleteItem} toggleCompleted={toggleCompleted} />
-        )
-      })}
-    </div>
-  )
-}
-
-function Filter({ filter, setFilter }) {
-  return (
-    <React.Fragment>
-      <label htmlFor="filter">Filter list </label>
-      <select htmlFor="filter" onChange={e => setFilter(e.target.value)} value={filter}>
-        <option value="all">ALL</option>
-        <option value="completed">COMPLETED</option>
-        <option value="other">OTHERS</option>
-      </select>
-    </React.Fragment>
-  )
-};
-
-function Form({ setCurrentItem, currentItem, addTodo, clearTodo, isReady }) {
-
-  const inputEl = React.useRef(null);
-
-  React.useEffect(() => {
-    if (isReady) {
-      inputEl.current.focus();
-    }
-  })
-
-  return (
-    <React.Fragment>
-      <div>
-        <input ref={inputEl} placeholder="add todo" value={currentItem} onChange={(e) => setCurrentItem(e.target.value)} />
-        <button onClick={addTodo}>Add</button>
-        <button onClick={clearTodo}>Clear list</button>
-      </div>
-    </React.Fragment>
-  )
 }
 
 function useFetch(url) {
@@ -160,9 +80,9 @@ function App() {
     <React.Fragment>
       <div className="App">
         <Header />
-        <Form isReady={memoValue.length >= 0} addTodo={addItemToList} clearTodo={clearTodo} currentItem={currentItem} setCurrentItem={setCurrentItem} />
-        <Filter filter={filter} setFilter={setFilter} />
-        <List itemList={itemList} updateItemList={updateItemList} filter={filter} />
+        <TodoAdd isReady={memoValue.length >= 0} addTodo={addItemToList} clearTodo={clearTodo} currentItem={currentItem} setCurrentItem={setCurrentItem} />
+        <TodoFilter filter={filter} setFilter={setFilter} />
+        <TodoList itemList={itemList} updateItemList={updateItemList} filter={filter} />
       </div>
     </React.Fragment>
   );

@@ -1,4 +1,7 @@
-function List({ itemList, updateItemList, filter }) {
+import * as React from 'react';
+import TodoRow from './TodoRow';
+
+function TodoList({ itemList, updateItemList, filter }) {
 
     const deleteItem = (index) => {
         const newList = itemList.filter(itemObject => {
@@ -23,9 +26,11 @@ function List({ itemList, updateItemList, filter }) {
                 return (filter === 'all' || (itemObject.completed && filter) === 'completed' || (!itemObject.completed && filter) === 'other');
             }).map((itemObject) => {
                 return (
-                    <ListInside itemObject={itemObject} key={itemObject.index} deleteItem={deleteItem} toggleCompleted={toggleCompleted} />
+                    <TodoRow itemObject={itemObject} key={itemObject.index} deleteItem={deleteItem} toggleCompleted={toggleCompleted} />
                 )
             })}
         </div>
     )
 }
+
+export default TodoList;
