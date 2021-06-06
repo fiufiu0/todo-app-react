@@ -1,5 +1,8 @@
 import * as React from 'react';
 import './App.css'
+import ButtonX from './components/ButtonX';
+import Checkbox from './components/Checkbox';
+import Header from './components/Header';
 
 function useLocalStorageState(key, defaultValue) {
   const [value, setValue] = React.useState(() => {
@@ -22,8 +25,8 @@ function ListInside({ deleteItem, toggleCompleted, itemObject, index }) {
       <div key={itemObject + index} className="itemContainer">
         <p>{itemObject.item}</p>
         <div>
-          <input type="checkbox" onChange={() => toggleCompleted(itemObject.index)} checked={itemObject.completed} />
-          <button onClick={() => deleteItem(itemObject)}>X</button>
+          <Checkbox onChange={() => toggleCompleted(itemObject.index)} checked={itemObject.completed} />
+          <ButtonX onClick={() => deleteItem(itemObject)} />
         </div>
       </div>
     </React.Fragment>
@@ -63,13 +66,10 @@ function List({ itemList, updateItemList, filter }) {
 }
 
 function Filter({ filter, setFilter }) {
-  const onChangeHandler = e => {
-    setFilter(e.target.value);
-  }
   return (
     <React.Fragment>
       <label htmlFor="filter">Filter list </label>
-      <select htmlFor="filter" onChange={e => onChangeHandler(e)} value={filter}>
+      <select htmlFor="filter" onChange={e => setFilter(e.target.value)} value={filter}>
         <option value="all">ALL</option>
         <option value="completed">COMPLETED</option>
         <option value="other">OTHERS</option>
@@ -77,8 +77,6 @@ function Filter({ filter, setFilter }) {
     </React.Fragment>
   )
 };
-
-
 
 function Form({ setCurrentItem, currentItem, addTodo, clearTodo, isReady }) {
 
@@ -161,9 +159,7 @@ function App() {
   return (
     <React.Fragment>
       <div className="App">
-        <header className="App-header">
-          <h4>TODO LIST APP</h4>
-        </header>
+        <Header />
         <Form isReady={memoValue.length >= 0} addTodo={addItemToList} clearTodo={clearTodo} currentItem={currentItem} setCurrentItem={setCurrentItem} />
         <Filter filter={filter} setFilter={setFilter} />
         <List itemList={itemList} updateItemList={updateItemList} filter={filter} />
