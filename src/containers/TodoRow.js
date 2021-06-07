@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Checkbox from '../components/Checkbox';
 import ButtonX from '../components/ButtonX';
+import { useHistory } from 'react-router-dom';
 
 function TodoRow({ deleteItem, toggleCompleted, itemObject, index }) {
 
@@ -28,6 +29,10 @@ function TodoRow({ deleteItem, toggleCompleted, itemObject, index }) {
     }
 
     const [state, dispatch] = React.useReducer(reducer, initialState);
+    const history = useHistory();
+    console.log(history)
+    const openTodo = () => history.push(`todos/${itemObject.index}`);
+    // zmiana na link?
 
     return (
         <React.Fragment>
@@ -36,6 +41,7 @@ function TodoRow({ deleteItem, toggleCompleted, itemObject, index }) {
                 <div>
                     <Checkbox onChange={() => toggleCompleted(itemObject.index)} checked={itemObject.completed} />
                     <ButtonX onClick={() => dispatch({ type: 'DELETE', payload: itemObject })} />
+                    <button onClick={openTodo}>OPEN</button>
                 </div>
             </div>
         </React.Fragment>

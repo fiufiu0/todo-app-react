@@ -4,6 +4,7 @@ import Header from './components/Header';
 import TodoList from './containers/TodoList';
 import TodoAdd from './containers/TodoAdd';
 import TodoFilter from './containers/TodoFilter';
+import { Redirect } from 'react-router-dom';
 
 function useLocalStorageState(key, defaultValue) {
   const [value, setValue] = React.useState(() => {
@@ -39,7 +40,7 @@ function useFetch(url) {
 }
 
 
-function App() {
+function App(props) {
   const [itemList, updateItemList] = useLocalStorageState("myKey", []);
   const [lastId, setLastId] = useLocalStorageState("lastId", 0);
   const [currentItem, setCurrentItem] = React.useState("");
@@ -76,8 +77,17 @@ function App() {
     updateItemList([]);
   }
 
+  if (!props.isLogged) {
+    return (
+      <Redirect to={{ pathname: "/" }} />
+    );
+  }
+
   return (
     <React.Fragment>
+      <div>
+        <button onClick={() => { props.setIsLogged(false) }}>Wyloguj</button>
+      </div>
       <div className="App">
         <Header />
         <TodoAdd isReady={memoValue.length >= 0} addTodo={addItemToList} clearTodo={clearTodo} currentItem={currentItem} setCurrentItem={setCurrentItem} />
