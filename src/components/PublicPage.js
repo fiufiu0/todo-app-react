@@ -1,4 +1,5 @@
 import { Redirect } from "react-router-dom";
+import * as React from "react";
 
 function PublicPage(props) {
     if (props.isLogged) {
@@ -9,7 +10,7 @@ function PublicPage(props) {
 
     return (
         <>
-            <h3>Zaloguj, aby zobaczyć.</h3>
+            <h3>Zaloguj, aby zobaczyć!</h3>
             <button onClick={() => { props.setIsLogged(true) }}>LOGIN</button>
         </>
     )

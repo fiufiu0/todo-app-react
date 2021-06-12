@@ -31,7 +31,7 @@ function TodoRow({ deleteItem, toggleCompleted, itemObject, index }) {
     const [state, dispatch] = React.useReducer(reducer, initialState);
     const history = useHistory();
     console.log(history)
-    const openTodo = () => history.push(`todos/${itemObject.index}`);
+    const openTodo = () => history.push(`todos/${itemObject.index}/${itemObject.item}`);
     // zmiana na link?
 
     return (

@@ -20,7 +20,7 @@ function Wrapper(props) {
             <App isLogged={isLogged} setIsLogged={setIsLogged} />
           </AuthProvider>
         </Route>
-        <Route path="/todos/:id">
+        <Route path="/todos/:id/:item">
           <Todos />
         </Route>
         <Route path="/">

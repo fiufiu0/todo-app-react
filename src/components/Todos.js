@@ -3,11 +3,12 @@ import { useParams } from 'react-router-dom';
 
 
 function Todos() {
-    const { id } = useParams();
+    const { id, item } = useParams();
+    console.log({ id, item });
     return (
         <div>
-            <p>Todo ID: {id}</p>
-            <p>Todo text: </p>
+            <p><b>Todo ID:</b> {id}</p>
+            <p><b>Todo text:</b> {item}</p>
         </div>
     )
 }
