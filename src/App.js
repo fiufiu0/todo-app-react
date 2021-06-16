@@ -81,7 +81,7 @@ function App(props) {
       </div>
       <div className="App">
         <Header />
-        <TodoAdd addTodo={addItemToList} clearTodo={clearTodo} currentItem={currentItem} setCurrentItem={setCurrentItem} />
+        <TodoAdd isReady={memoValue.length >= 0} addTodo={addItemToList} clearTodo={clearTodo} currentItem={currentItem} setCurrentItem={setCurrentItem} />
         <TodoFilter filter={filter} setFilter={setFilter} />
         <TodoList itemList={itemList} updateItemList={updateItemList} filter={filter} />
       </div>
