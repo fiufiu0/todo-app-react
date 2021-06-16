@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PublicPage from './components/PublicPage';
 import AuthProvider from './components/AuthProvider';
 import Todos from './components/Todos';
+import { DataContext } from './context/Context';
 
 
 function Wrapper(props) {
@@ -14,19 +15,21 @@ function Wrapper(props) {
   return (
     <>
       <div>{`Is logged: ${isLogged}`}</div>
-      <Switch>
-        <Route path="/todo">
-          <AuthProvider>
-            <App isLogged={isLogged} setIsLogged={setIsLogged} />
-          </AuthProvider>
-        </Route>
-        <Route path="/todos/:id/:item">
-          <Todos />
-        </Route>
-        <Route path="/">
-          <PublicPage isLogged={isLogged} setIsLogged={setIsLogged} />
-        </Route>
-      </Switch>
+      <DataContext>
+        <Switch>
+          <Route path="/todo">
+            <AuthProvider>
+              <App isLogged={isLogged} setIsLogged={setIsLogged} />
+            </AuthProvider>
+          </Route>
+          <Route path="/todos/:id">
+            <Todos />
+          </Route>
+          <Route path="/">
+            <PublicPage isLogged={isLogged} setIsLogged={setIsLogged} />
+          </Route>
+        </Switch>
+      </DataContext>
     </>
   )
 }

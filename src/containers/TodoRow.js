@@ -15,11 +15,6 @@ function TodoRow({ deleteItem, toggleCompleted, itemObject, index }) {
         console.log(' > action log', action);
 
         switch (action.type) {
-            case 'CHECK':
-                return {
-                    ...state,
-                    check: action.payload,
-                };
             case 'DELETE':
                 deleteItem(action.payload);
                 return state;
@@ -30,9 +25,8 @@ function TodoRow({ deleteItem, toggleCompleted, itemObject, index }) {
 
     const [state, dispatch] = React.useReducer(reducer, initialState);
     const history = useHistory();
-    console.log(history)
-    const openTodo = () => history.push(`todos/${itemObject.index}/${itemObject.item}`);
-    // zmiana na link?
+    // console.log(history);
+    const openTodo = () => history.push(`todos/${itemObject.index}`);
 
     return (
         <React.Fragment>

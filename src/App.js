@@ -5,20 +5,9 @@ import TodoList from './containers/TodoList';
 import TodoAdd from './containers/TodoAdd';
 import TodoFilter from './containers/TodoFilter';
 import { Redirect } from 'react-router-dom';
+import { myDataContext, useLocalStorageState } from './context/Context';
 
-function useLocalStorageState(key, defaultValue) {
-  const [value, setValue] = React.useState(() => {
-    const valueFromLocalStorage = window.localStorage.getItem(key);
-    if (valueFromLocalStorage) {
-      return JSON.parse(valueFromLocalStorage);
-    }
-    return typeof defaultValue === 'function' ? defaultValue() : defaultValue;
-  });
-  React.useEffect(() => {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  }, [value, key]);
-  return [value, setValue];
-}
+// usunięty localstorage do contextu (błędy)
 
 function useFetch(url) {
   const [data, setData] = React.useState([]);
@@ -41,12 +30,14 @@ function useFetch(url) {
 
 
 function App(props) {
-  const [itemList, updateItemList] = useLocalStorageState("myKey", []);
+  // const [itemList, updateItemList] = useLocalStorageState("myKey", []);
   const [lastId, setLastId] = useLocalStorageState("lastId", 0);
+  const { itemList, updateItemList } = React.useContext(myDataContext);
   const [currentItem, setCurrentItem] = React.useState("");
   const [filter, setFilter] = React.useState('all');
   const apiUrl = "https://jsonplaceholder.typicode.com/users/1/todos";
   const data = useFetch(apiUrl);
+
   const memoValue = React.useMemo(() => {
     const newData = data.map((el) => {
       const newEl = {
@@ -90,7 +81,7 @@ function App(props) {
       </div>
       <div className="App">
         <Header />
-        <TodoAdd isReady={memoValue.length >= 0} addTodo={addItemToList} clearTodo={clearTodo} currentItem={currentItem} setCurrentItem={setCurrentItem} />
+        <TodoAdd addTodo={addItemToList} clearTodo={clearTodo} currentItem={currentItem} setCurrentItem={setCurrentItem} />
         <TodoFilter filter={filter} setFilter={setFilter} />
         <TodoList itemList={itemList} updateItemList={updateItemList} filter={filter} />
       </div>
